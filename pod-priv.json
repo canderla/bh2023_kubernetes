@@ -1,0 +1,26 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "privpod",
+    "creationTimestamp": null,
+    "labels": {
+      "run": "privpod"
+    }
+  },
+  "spec": {
+    "containers": [
+      {
+        "name": "privpod",
+        "image": "bustakube/alpine-small-attack",
+        "resources": {},
+        "securityContext": {
+          "privileged": true
+        }
+      }
+    ],
+    "restartPolicy": "Always",
+    "dnsPolicy": "ClusterFirst"
+  },
+  "status": {}
+}

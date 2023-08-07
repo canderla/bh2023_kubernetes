@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations: null
+  labels: null
+  name: attack-pod
+  namespace: default
+spec:
+  containers:
+    - image: docker-registry:5000/k8s.gcr.io/redis:e2e
+      imagePullPolicy: IfNotPresent
+      name: attack-container
+      volumeMounts:
+        - mountPath: /mnt
+          name: mount-root-into-mnt
+  volumes:
+    - name: mount-root-into-mnt
+      hostPath:
+        path: /
+  imagePullSecrets:
+  - name: regcred-docker-registry-5000

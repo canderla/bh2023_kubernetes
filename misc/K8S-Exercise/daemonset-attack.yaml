@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: attack-daemonset
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: attack-daemonset
+  template:
+    metadata:
+      labels:
+        name: attack-daemonset
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: 'Exists'
+        effect: 'NoSchedule'
+      imagePullSecrets:
+      - name: regcred-docker-registry-5000
+      containers:
+      - name: attack-root
+        image: docker-registry:5000/k8s.gcr.io/redis:e2e
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 1m
+          requests:
+            cpu: 1m
+            memory: 100Mi
+        volumeMounts:
+        - name: hostroot
+          mountPath: /mnt
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: hostroot
+        hostPath:
+          path: /
