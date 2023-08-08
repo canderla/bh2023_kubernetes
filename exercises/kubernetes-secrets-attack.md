@@ -15,6 +15,13 @@ directories_to_sync: ssh-config unfinished
     <hold down Alt><hit F2>lxterminal<HIT the enter key>
     ```
 
+2. Start your Kubernetes cluster - we will use this one for all Kubernetes exercises except for the Cloud Attacks, Peirates and Node Attacks:
+
+   ```shell
+   /sync/bin/suspend-all-vms.sh
+   /sync/bin/start-bustakube.sh
+   ```
+
 2. SSH into the control plane node on the cluster:
 
     ```shell
@@ -366,8 +373,9 @@ directories_to_sync: ssh-config unfinished
 63. Get the pod's IP address:
 
     ```shell
-    ip=$( kubectl get pod display-token -o yaml \
-     | grep podIP: |awk '{print $2}')
+
+    p="display-token"
+    ip=$( kubectl get po $p -o yaml |grep podIP: |awk '{print $2}')
     ```
 
 64. Now, connect to the pod with `curl` to receive the token:
@@ -464,8 +472,8 @@ directories_to_sync: ssh-config unfinished
 
     ```shell
     
-    url="https://github.com/kyverno/policies/raw/main/other"
-    curl -LO ${url}/restrict-secret-role-verbs/restrict-secret-role-verbs.yaml
+    url="https://raw.githubusercontent.com/kyverno/policies/main/other/res"
+    curl -LO "${url}/restrict-secret-role-verbs/restrict-secret-role-verbs.yaml"
     ```
 
 81. Kyverno cluster policies are in `audit` mode by default, where they alert on a violation of the policy, but do not block it. Modify this manifest to change the `validationFailureAction` to `enforce`.

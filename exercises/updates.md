@@ -71,3 +71,10 @@ Please close your browser tabs. Memory is tight on these laptops. Run the follow
 ```shell
 /root/bhusa2023/bin/increase-swap.sh
 ```
+
+### Download Peirates
+
+    ```shell
+    github="https://github.com/inguardians/peirates"
+    wget ${github}/releases/download/v1.1.12/peirates-linux-amd64.tar.xz
+    ```

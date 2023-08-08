@@ -1,7 +1,7 @@
 ---
 layout: exercise
 title: "Exercise: Peirates"
-exercise: 100
+exercise: 999
 tools: openssh-client 
 directories_to_sync: ssh-config K8S-Exercise
 ---
@@ -28,68 +28,33 @@ directories_to_sync: ssh-config K8S-Exercise
     ```
 
 
-
-
-
 3. And test that it works:
 
     ```shell
     kubectl get pods
     ```
 
-
-
-Create an SSH key:
-   ssh-keygen
-See
-"Enter file in which to save the key (/root/.ssh/id_rsa): "
-hit Enter
-See
-Enter passphrase (empty for no passphrase): 
-Hit enter
-see
-Enter same passphrase again: 
-Hit Enter
-
-   cat out the ssh key
-   cat ~/.ssh/id_rsa.pub
-   
-   Copy the ssh key into the priv pod
-
-   cat ~/.ssh/id_rsa.pub | kubectl exec -i priv -- /bin/bash -c "cat >id_rdsa.pub"
-
-
-
-
 4. Let's start a `hostNetwork` pod based on Peirates:
 
     ```shell
-    kubectl --dry-run=client -o json run peirates --image=bustakube/alpine-peirates | jq '.spec.hostNetwork=true' | kubectl create -f -
+    kubectl --dry-run=client -o json run peirates \
+    --image=bustakube/alpine-peirates | \
+    jq '.spec.hostNetwork=true' | \
+    kubectl create -f -
     ```
 
     Alternatively, we could exec into the priv pod and pull down Peirates:
 
-    ```shell
+    ```
     kubectl exec -it priv -- /bin/bash
     apk add wget
     github="https://github.com/inguardians/peirates"
-    wget ${github}/releases/download/v1.1.10/peirates-linux-amd64.tar.xz
+    wget ${github}/releases/download/v1.1.12/peirates-linux-amd64.tar.xz
     tar -xvf peirates-linux-amd64.tar.xz
     mv peirates-linux-amd64/peirates /usr/bin/
     chmod 755 /usr/bin/peirates
     peirates
     ```
-
-
-   Copy peirates into the node's filesystem
-   mount /dev/sda1 /mnt
-   cp /usr/bin/peirates /mnt/usr/bin/
-
-   Add an SSH key to the node's filesystem
-   mkdir /mnt/root/.ssh
-   cat ~/id_rsa.pub >>/mnt/root/.ssh/authorized_keys
-   chmod -R go-rwx /mnt/root/.ssh
-
 
 5. Exec into your peirates pod:
 
