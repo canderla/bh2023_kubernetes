@@ -12,6 +12,14 @@ Let's try another defense on the first cluster takeover scenario: "OPA Gatekeepe
 
 1. Start up a fresh lxterminal by clicking the "sparrow" logo in the bottom-left corner of the screen, clicking run, typing `lxterminal` and hitting enter. 
 
+
+2. Start your Kubernetes cluster - we will use this one for all Kubernetes exercises except for the Cloud Attacks, Peirates and Node Attacks:
+
+    ```shell
+    /sync/bin/suspend-all-vms.sh
+    /sync/bin/start-bustakube.sh
+    ```
+
 2. SSH into the Kubernetes control-plane node:
 
     ```shell
@@ -31,11 +39,10 @@ Let's try another defense on the first cluster takeover scenario: "OPA Gatekeepe
     /usr/local/bin/toggle-psp-controller.sh deactivate
     ```
 
-5. Install gatekeeper, using the GitHub-hosted manifest file:
+5. Install gatekeeper, using our local copy of the GitHub-hosted manifest file:
 
     ```shell
-    url="https://raw.githubusercontent.com/open-policy-agent"
-    kubectl apply -f ${url}/gatekeeper/release-3.8/deploy/gatekeeper.yaml
+    kubectl apply -f /usr/share/bustakube/gatekeeper.yaml
     ```
 
 6. Confirm that Gatekeeper is running:
@@ -96,3 +103,11 @@ Let's try another defense on the first cluster takeover scenario: "OPA Gatekeepe
     ```
 
 15. Observe the error message that says our attack pod was blocked. This means OPA Gatekeeper has blocked our attack.
+
+16. Now uninstall OPA Gatekeeper:
+
+    ```shell
+    kubectl delete -f \
+    https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.8/deploy/gatekeeper.yaml
+    ```
+

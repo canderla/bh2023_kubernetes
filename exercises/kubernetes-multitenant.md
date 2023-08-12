@@ -283,7 +283,7 @@ directories_to_sync: ssh-config K8S-Exercise
 53. Let's try listing pods:
 
     ```shell
-    /tmp/kubectl get pods
+    kubectl get pods
     ```
 
 54. Note that the error message tells us that we're using a different service account now: this one is named `system:serviceaccount:mktg:mysql`, whereas the other was specific to wordpress. This service account isn't allowed to even list pods, much less exec into any.
@@ -291,7 +291,7 @@ directories_to_sync: ssh-config K8S-Exercise
 55. Let's see if we can find the IP addresses of the nodes:
 
     ```shell
-    /tmp/kubectl get nodes
+    kubectl get nodes
     ```
 
 56. Let's communicate with the read-and-write API on the kubelet on a node, which listens on TCP port `10250`. We'll try the control-plane node, but we could try this on any node. We'll start by asking for a list of the running pods. We'll need the control-plane node's external IP address, since the pod doesn't have this node in its `/etc/hosts` file. You can get that IP address from your Kali system's `/etc/hosts` file.

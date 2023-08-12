@@ -256,7 +256,7 @@ directories_to_sync: ssh-config CIS
 
     ```shell
     curl -ks https://10.23.58.41:10250/runningpods/ | \
-      jq '.items.[] | {name: .metadata.name , ns: .metadata.namespace }'
+      jq '.items[] | {name: .metadata.name , ns: .metadata.namespace }'
     ```
 
 43. Let's parse out the name of the pod that's running `kube-proxy`. First, let's write a `jq` line that gives us the name of the first container in every pod:

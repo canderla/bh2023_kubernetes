@@ -1,6 +1,6 @@
 ---
 layout: exercise
-exercise: 55
+exercise: 205
 title: "Exercise: Hacking Mr Robot - Defending with Pre-emptive File Permissions"
 vm: mrrobot
 tools: openssh-client nmap mousepad dirbuster
